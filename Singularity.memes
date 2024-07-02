@@ -26,6 +26,12 @@ wget https://meme-suite.org/meme/meme-software/Databases/motifs/motif_databases.
 wget https://meme-suite.org/meme/meme-software/Databases/gomo/gomo_databases.3.2.tgz
 wget https://meme-suite.org/meme/meme-software/Databases/tgene/tgene_databases.1.0.tgz
 
+
+# make the directories for the databases
+mkdir -p ./motif_databases
+mkdir -p ./gomo_databases
+mkdir -p ./tgene_databases
+
 # extract the databases
 tar -zxf motif_databases.12.24.tgz -C ./motif_databases
 tar -zxf gomo_databases.3.2.tgz -C ./gomo_databases
