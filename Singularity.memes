@@ -21,21 +21,17 @@ mkdir -p ${DEPLOYMENT_DIR}
 
 # push to the deployment directory onto the stack
 pushd ${DEPLOYMENT_DIR}
+
 # download the databases
 wget https://meme-suite.org/meme/meme-software/Databases/motifs/motif_databases.12.24.tgz
 wget https://meme-suite.org/meme/meme-software/Databases/gomo/gomo_databases.3.2.tgz
 wget https://meme-suite.org/meme/meme-software/Databases/tgene/tgene_databases.1.0.tgz
 
 
-# make the directories for the databases
-mkdir -p ./motif_databases
-mkdir -p ./gomo_databases
-mkdir -p ./tgene_databases
-
 # extract the databases
-tar -zxf motif_databases.12.24.tgz -C ./motif_databases
-tar -zxf gomo_databases.3.2.tgz -C ./gomo_databases
-tar -zxf tgene_databases.1.0.tgz -C ./tgene_databases
+tar -zxf motif_databases.12.24.tgz -C  ${MEME_DB_DIR}/
+tar -zxf gomo_databases.3.2.tgz -C ${MEME_DB_DIR}/
+tar -zxf tgene_databases.1.0.tgz -C  ${MEME_DB_DIR}/
 
 # remove the tarballs
 rm -rf motif_databases.12.24.tgz
@@ -43,9 +39,9 @@ rm -rf gomo_databases.3.2.tgz
 rm -rf tgene_databases.1.0.tgz
 
 # move the databases to the meme db directory 
-mv ./motif_databases ${MEME_DB_DIR}/
-mv ./gomo_databases ${MEME_DB_DIR}/
-mv ./tgene_databases ${MEME_DB_DIR}/
+#cp -rf motif_databases ${MEME_DB_DIR}/
+#cp -rf gomo_databases ${MEME_DB_DIR}/
+#cp -rf tgene_databases ${MEME_DB_DIR}/
 
 # pop off of the stack right here 
 popd 
