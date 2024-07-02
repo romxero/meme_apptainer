@@ -1,0 +1,53 @@
+Bootstrap: docker
+From: memesuite/memesuite:latest
+
+# please visit the github page for more information
+# https://github.com/ubccr/xdmod
+
+%labels
+        Author _RC_
+
+%setup
+
+%files
+
+%post
+
+MEME_DB_DIR=/opt/meme/share/meme-5.5.5/db #this is created in the base container 
+DEPLOYMENT_DIR=/opt/memes_deployment_dir #this is where we stage the database downloads here
+
+# the main deployment directory here: 
+mkdir -p ${DEPLOYMENT_DIR}
+
+# push to the deployment directory onto the stack
+pushd ${DEPLOYMENT_DIR}
+# download the databases
+wget https://meme-suite.org/meme/meme-software/Databases/motifs/motif_databases.12.24.tgz
+wget https://meme-suite.org/meme/meme-software/Databases/gomo/gomo_databases.3.2.tgz
+wget https://meme-suite.org/meme/meme-software/Databases/tgene/tgene_databases.1.0.tgz
+
+# extract the databases
+tar -zxf motif_databases.12.24.tgz -C ./motif_databases
+tar -zxf gomo_databases.3.2.tgz -C ./gomo_databases
+tar -zxf tgene_databases.1.0.tgz -C ./tgene_databases
+
+# remove the tarballs
+rm -rf motif_databases.12.24.tgz
+rm -rf gomo_databases.3.2.tgz
+rm -rf tgene_databases.1.0.tgz
+
+# move the databases to the meme db directory 
+mv ./motif_databases ${MEME_DB_DIR}/
+mv ./gomo_databases ${MEME_DB_DIR}/
+mv ./tgene_databases ${MEME_DB_DIR}/
+
+# pop off of the stack right here 
+popd 
+
+
+%environment
+export LC_ALL=C.UTF-8
+
+
+%runscript
+echo /dev/null # duh 
